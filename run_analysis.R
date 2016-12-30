@@ -1,16 +1,15 @@
-setwd("~/Google Drive/Getting and Cleaning Data")
 library(plyr)
 
 # 1. Merge the training and the test sets to create one data set
 # Load train sets
-x_train <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/train/X_train.txt")
-y_train <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/train/Y_train.txt")
-subjects_train <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/train/subject_train.txt")
+x_train <- read.table("UCI HAR Dataset/train/X_train.txt")
+y_train <- read.table("UCI HAR Dataset/train/Y_train.txt")
+subjects_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
 
 # Load test sets
-x_test <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/test/X_test.txt")
-y_test <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/test/Y_test.txt")
-subjects_test <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/test/subject_test.txt")
+x_test <- read.table("UCI HAR Dataset/test/X_test.txt")
+y_test <- read.table("UCI HAR Dataset/test/Y_test.txt")
+subjects_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
 
 # Merge data sets
 x_data <- rbind(x_train, x_test) #merge x data sets
@@ -18,14 +17,14 @@ y_data <- rbind(y_train, y_test) #merge y data sets
 subjects_data <- rbind(subjects_train, subjects_test) #merge subjects data sets
 
 # 2. Extract only the measurements on the mean and standard deviation for each measurement
-features <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/features.txt")
+features <- read.table("UCI HAR Dataset/features.txt")
 mean_and_std <- grep("-(mean|std)\\(\\)", features[, 2])  #get column with mean or std in their names
 
 x_data <- x_data[, mean_and_std] #subset of desired columns
 names(x_data) <- features[mean_and_std, 2] #replace with correct column names
 
 # 3. Use descriptive activity names to name the activities in the data set
-activities <- read.table("~/Google Drive/Getting and Cleaning Data/UCI HAR Dataset/activity_labels.txt")
+activities <- read.table("UCI HAR Dataset/activity_labels.txt")
 y_data[, 1] <- activities[y_data[, 1], 2] #replace with correct activity name
 names(y_data) <- "activity" #replace with correct column name
 
